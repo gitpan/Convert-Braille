@@ -3,37 +3,47 @@ use utf8;
 
 BEGIN
 {
-require 5.6.0;
+require 5.006;
 
 use base qw(Exporter);
 
 use strict;
-use vars qw( @EXPORT @EXPORT_OK $VERSION %EnglishToBrailleUnicode %BrailleUnicodeToEnglish $SpecialContext );
-use Convert::Braille qw(%BrailleAsciiToUnicode brailleUnicodeToAscii brailleUnicodeToDots);
+use vars qw( @EXPORT @EXPORT_OK $VERSION
+	%EnglishToBrailleUnicode
+	%BrailleUnicodeToEnglish
+	%SpecialContext
+);
+use Convert::Braille qw(
+	%BrailleAsciiToUnicode
+	brailleAsciiToUnicode
+	brailleDotsToUnicode
+	brailleUnicodeToAscii
+	brailleUnicodeToDots
+);
 
-$VERSION = 0.01;
+$VERSION = '0.02';
 
 @EXPORT = qw(
-		englishToBrailleUnicode
-		englishToBrailleAscii
-		englishToBrailleDots
+	englishToBrailleUnicode
+	englishToBrailleAscii
+	englishToBrailleDots
 
-		brailleAsciiToEnglish
-		brailleDotsToEnglish
-		brailleUnicodeToEnglish
+	brailleAsciiToEnglish
+	brailleDotsToEnglish
+	brailleUnicodeToEnglish
 );
 @EXPORT_OK = qw(
-		englishToBrailleUnicode
-		englishToBrailleAscii
-		englishToBrailleDots
+	englishToBrailleUnicode
+	englishToBrailleAscii
+	englishToBrailleDots
 
-		brailleAsciiToEnglish
-		brailleDotsToEnglish
-		brailleUnicodeToEnglish
+	brailleAsciiToEnglish
+	brailleDotsToEnglish
+	brailleUnicodeToEnglish
 
-		%EnglishToBrailleUnicode
-		%BrailleUnicodeToEnglish
-		%SpecialContext
+	%EnglishToBrailleUnicode
+	%BrailleUnicodeToEnglish
+	%SpecialContext
 );
 
 %EnglishToBrailleUnicode =(
@@ -76,10 +86,10 @@ $VERSION = 0.01;
 	0	=> $BrailleAsciiToUnicode{0},
 
 	'and'	=> $BrailleAsciiToUnicode{'&'},
-	the		=> $BrailleAsciiToUnicode{'!'},
+	the	=> $BrailleAsciiToUnicode{'!'},
 	'for'	=> $BrailleAsciiToUnicode{'='},
 	with	=> $BrailleAsciiToUnicode{'('},
-	of		=> $BrailleAsciiToUnicode{')'},
+	of	=> $BrailleAsciiToUnicode{')'}
 );
 
 %SpecialContext =(
@@ -91,16 +101,16 @@ $VERSION = 0.01;
 	gh	=> $BrailleAsciiToUnicode{'<'},
 	in	=> $BrailleAsciiToUnicode{9},
 	ing	=> $BrailleAsciiToUnicode{'+'},
-	ou	=> $BrailleAsciiToUnicode{'\\'}
+	ou	=> $BrailleAsciiToUnicode{'\\'},
 	ow	=> $BrailleAsciiToUnicode{'['},
-	st	=> $BrailleAsciiToUnicode{'/'}
-	sh	=> $BrailleAsciiToUnicode{'%'}
+	st	=> $BrailleAsciiToUnicode{'/'},
+	sh	=> $BrailleAsciiToUnicode{'%'},
 	th	=> $BrailleAsciiToUnicode{'?'},
 	wh	=> $BrailleAsciiToUnicode{':'},
 
 	'!'		=> 6,
 	':'		=> 3,
-	'[\(\)]'		=> 7,
+	'[\(\)]'	=> 7,
 	'<i>'		=> '.',
 	'.'		=> 4,
 	','		=> 1,
@@ -108,7 +118,7 @@ $VERSION = 0.01;
 	'^'		=> '\'',
 	'?'		=> 8,
 	';'		=> 2,
-	'"'		=> 0,
+	'"'		=> 0
 );
 
 # ' is Capital  or is , ?
@@ -140,7 +150,7 @@ foreach ( keys %EnglishToBrailleUnicode ) {
 # absolutely nothing in this package is tested.
 #
 
-sub _convert
+sub	_convert
 {
 	return unless ( $_[0] );
 
@@ -150,15 +160,14 @@ sub _convert
 }
 
 
-sub brailleUnicodeToEnglish
+sub	brailleUnicodeToEnglish
 {
 
 	return unless ( $_[0] );
-	my @chars  = split ( //, $string );
+	my @chars  = split ( //, $_[0] );
 
 	my $trans;
 
-	my $base;
 	foreach  ( @chars ) {
 		if ( exists($SpecialContext{$_}) ) {
 			#
@@ -169,7 +178,7 @@ sub brailleUnicodeToEnglish
 			#
 			# simple map
 			#
-			$base = $BrailleUnicodeToEnglish{$_};
+			$trans .= $BrailleUnicodeToEnglish{$_};
 		}
 		else {
 			#
@@ -178,22 +187,21 @@ sub brailleUnicodeToEnglish
 		}
 	}
 
-	$trans .= $base if ( $base );
 	$trans;
 }
 
 
-sub englishToBrailleUnicode
+sub	englishToBrailleUnicode
 {
 
 	return unless ( $_[0] );
 
-	my @chars  = split ( //, $string );
+	my @chars  = split ( //, $_[0] );
 
 	my $trans;
 
 	foreach  ( @chars ) {
-		if ( 1 ) {
+		if ( 0 ) {
 			# 
 			# special cases
 			# 
@@ -218,7 +226,7 @@ sub	englishToBrailleDots
 }
 
 
-sub brailleAsciiToEnglish
+sub	brailleAsciiToEnglish
 {
 	brailleUnicodeToEnglish ( brailleAsciiToUnicode ( @_ ) );
 }
@@ -230,5 +238,69 @@ sub	brailleDotsToEnglish
 }
 
 
+#########################################################
+# Do not change this, Do not put anything below this.
+# File must return "true" value at termination
 1;
+##########################################################
+
 __END__
+
+
+
+=head1 NAME
+
+ Convert::Braille::English - Convert Between Braille Encodings.
+
+=head1 SYNOPSIS
+
+ use Convert::Braille;
+
+ print brailleAsciiToEnglish ( "HELLO" ), "\n";
+ print brailleDotsToEnglish  ( "12515123123135" ), "\n";
+
+
+=head1 REQUIRES
+
+perl5.6.0 or later.
+
+=head1 EXPORTS
+
+=over 4
+
+=item englishToBrailleUnicode
+
+=item englishToBrailleAscii
+
+=item englishToBrailleDots
+
+=item brailleAsciiToEnglish
+
+=item brailleDotsToEnglish
+
+=item brailleUnicodeToEnglish
+
+=back
+
+=head1 COPYRIGHT
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+=head1 BUGS
+
+None presently known.
+
+=head1 AUTHOR
+
+Daniel Yacob,  L<dyacob@cpan.org|mailto:dyacob@cpan.org>
+
+=head1 SEE ALSO
+
+L<Convert::Braille>    L<Convert::Braille::Ethiopic>
+
+Included with this package:
+
+  examples/demo.pl
+
+=cut

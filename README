@@ -28,7 +28,7 @@ What This Package Can Do
   of dots 7 and 8. 
 
   Convert::Braille::Ethiopic is complete and requires
-  Convert::Ethiopic::Lite::Number.  Perl 5.8 is recommended
+  Convert::Number::Ethiopic.  Perl 5.8 is recommended
   for this module.
 
 What This Package Can NOT Do

@@ -50,3 +50,25 @@ print<<BOTTOM;
 </body>
 </html>
 BOTTOM
+
+
+__END__
+
+=head1 NAME
+
+makeethiopic.pl - Build the Ethiopic Syllabary in Braille.
+
+=head1 SYNOPSIS
+
+./makeethiopic.pl
+
+=head1 DESCRIPTION
+
+A demonstrator script to illustrate L<Convert::Braille::Ethiopic> usage.
+This script builds a syllabary table in Braille.
+
+=head1 AUTHOR
+
+Daniel Yacob,  L<dyacob@cpan.org|mailto:dyacob@cpan.org>
+
+=cut

@@ -31,3 +31,23 @@ print "[5/6] brailleUnicodeToDots :  $unicode => $dots\n";
 $ascii = brailleUnicodeToAscii ( $unicode );
 print "[6/6] brailleUnicodeToAscii:  $unicode => $ascii\n";
 
+
+__END__
+
+=head1 NAME
+
+demo.pl - Unicode, ASCII, Dots, Conversion Demonstration of Braille.
+
+=head1 SYNOPSIS
+
+./demo.pl
+
+=head1 DESCRIPTION
+
+A demonstrator script to illustrate L<Convert::Braille> usage.
+
+=head1 AUTHOR
+
+Daniel Yacob,  L<dyacob@cpan.org|mailto:dyacob@cpan.org>
+
+=cut

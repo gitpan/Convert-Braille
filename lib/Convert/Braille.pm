@@ -10,28 +10,28 @@ use base qw(Exporter);
 use strict;
 use vars qw( @EXPORT @EXPORT_OK $VERSION %BrailleAsciiToUnicode %BrailleUnicodeToAscii $dot_separator );
 
-$VERSION = 0.04;
+$VERSION = '0.05';
 
 @EXPORT = qw(
-		brailleDotsToUnicode
-		brailleUnicodeToDots
-		brailleUnicodeToAscii
-		brailleAsciiToUnicode
+	brailleDotsToUnicode
+	brailleUnicodeToDots
+	brailleUnicodeToAscii
+	brailleAsciiToUnicode
 
-		brailleAsciiToDots
-		brailleDotsToAscii
+	brailleAsciiToDots
+	brailleDotsToAscii
 );
 @EXPORT_OK = qw(
-		brailleDotsToUnicode
-		brailleUnicodeToDots
-		brailleUnicodeToAscii
-		brailleAsciiToUnicode
+	brailleDotsToUnicode
+	brailleUnicodeToDots
+	brailleUnicodeToAscii
+	brailleAsciiToUnicode
 
-		brailleAsciiToDots
-		brailleDotsToAscii
+	brailleAsciiToDots
+	brailleDotsToAscii
 
-		%BrailleAsciiToUnicode
-		%UnicodeToBrailleAscii
+	%BrailleAsciiToUnicode
+	%UnicodeToBrailleAscii
 );
 
 %BrailleAsciiToUnicode =(
@@ -111,7 +111,7 @@ $dot_separator = "";
 
 }
 
-sub _convert
+sub	_convert
 {
 	return unless ( defined($_[0]) );
 
@@ -121,7 +121,7 @@ sub _convert
 }
 
 
-sub brailleAsciiToUnicode
+sub	brailleAsciiToUnicode
 {
 
 	return unless ( defined($_[0]) );
@@ -132,7 +132,7 @@ sub brailleAsciiToUnicode
 }
 
 
-sub brailleUnicodeToAscii
+sub	brailleUnicodeToAscii
 {
 
 	return unless ( defined($_[0]) );
@@ -151,7 +151,7 @@ sub brailleUnicodeToAscii
 }
 
 
-sub brailleUnicodeToDots
+sub	brailleUnicodeToDots
 {
 
 	my $string = shift; # no || "" because fail for '0'
@@ -186,7 +186,7 @@ sub brailleUnicodeToDots
 }
 
 
-sub brailleDotsToUnicode
+sub	brailleDotsToUnicode
 {
 
 	my $string = shift;
@@ -223,7 +223,7 @@ sub brailleDotsToUnicode
 }
 
 
-sub brailleAsciiToDots
+sub	brailleAsciiToDots
 {
 	brailleUnicodeToDots ( brailleAsciiToUnicode ( @_ ) );
 }
@@ -234,13 +234,20 @@ sub	brailleDotsToAscii
 	brailleUnicodeToAscii ( brailleDotsToUnicode ( @_ ) );
 }
 
+
+#########################################################
+# Do not change this, Do not put anything below this.
+# File must return "true" value at termination
 1;
+##########################################################
+
 __END__
+
 
 
 =head1 NAME
 
- Convert::Braille - Package to convert between Braille encodings.
+ Convert::Braille - Convert Between Braille Encodings.
 
 =head1 SYNOPSIS
 
@@ -252,23 +259,45 @@ __END__
 
 =head1 REQUIRES
 
-perl5.6.0 (or later), Exporter
+perl5.6.0 or later.
 
 =head1 EXPORTS
 
- brailleDotsToUnicode
- brailleUnicodeToDots
- brailleUnicodeToAscii
- brailleAsciiToUnicode
- brailleAsciiToDots
- brailleDotsToAscii
+=over 4
+
+=item brailleDotsToUnicode
+
+=item brailleUnicodeToDots
+
+=item brailleUnicodeToAscii
+
+=item brailleAsciiToUnicode
+
+=item brailleAsciiToDots
+
+=item brailleDotsToAscii
+
+=back
+
+=head1 COPYRIGHT
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
 
 =head1 BUGS
 
- None known yet.
+None presently known.
 
 =head1 AUTHOR
 
- Daniel Yacob,  Yacob@EthiopiaOnline.Net
+Daniel Yacob,  L<dyacob@cpan.org|mailto:dyacob@cpan.org>
+
+=head1 SEE ALSO
+
+L<Convert::Braille::English>    L<Convert::Braille::English>
+
+Included with this package:
+
+  examples/demo.pl    examples/makeethiopic.pl
 
 =cut

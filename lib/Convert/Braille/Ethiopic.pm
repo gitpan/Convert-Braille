@@ -9,43 +9,43 @@ use base qw(Exporter);
 
 use strict;
 use vars qw( @EXPORT @EXPORT_OK $VERSION
-			 %EthiopicToBrailleUnicode %BrailleUnicodeToEthiopic
-			 %EthiopicNumeralsToBrailleUnicode %BrailleUnicodeToEthiopicNumerals
-			 %EthiopicPunctuationToBrailleUnicode %BrailleUnicodeToEthiopicPunctuation
-			 @EthiopicForms %EthiopicForms $n
-	 		);
+	 %EthiopicToBrailleUnicode %BrailleUnicodeToEthiopic
+	 %EthiopicNumeralsToBrailleUnicode %BrailleUnicodeToEthiopicNumerals
+	 %EthiopicPunctuationToBrailleUnicode %BrailleUnicodeToEthiopicPunctuation
+	 @EthiopicForms %EthiopicForms $n
+);
 use Convert::Braille qw(
-		%BrailleAsciiToUnicode
-		brailleAsciiToUnicode
-		brailleDotsToUnicode
-		brailleUnicodeToAscii
-		brailleUnicodeToDots
+	%BrailleAsciiToUnicode
+	brailleAsciiToUnicode
+	brailleDotsToUnicode
+	brailleUnicodeToAscii
+	brailleUnicodeToDots
 );
 
 $VERSION = 0.02;
 
 @EXPORT = qw(
-		ethiopicToBrailleUnicode
-		ethiopicToBrailleAscii
-		ethiopicToBrailleDots
+	ethiopicToBrailleUnicode
+	ethiopicToBrailleAscii
+	ethiopicToBrailleDots
 
-		brailleAsciiToEthiopic
-		brailleDotsToEthiopic
-		brailleUnicodeToEthiopic
+	brailleAsciiToEthiopic
+	brailleDotsToEthiopic
+	brailleUnicodeToEthiopic
 );
 @EXPORT_OK = qw(
-		ethiopicToBrailleUnicode
-		ethiopicToBrailleAscii
-		ethiopicToBrailleDots
+	ethiopicToBrailleUnicode
+	ethiopicToBrailleAscii
+	ethiopicToBrailleDots
 
-		brailleAsciiToEthiopic
-		brailleDotsToEthiopic
-		brailleUnicodeToEthiopic
+	brailleAsciiToEthiopic
+	brailleDotsToEthiopic
+	brailleUnicodeToEthiopic
 
-		%EthiopicToBrailleUnicode %BrailleUnicodeToEthiopic
-		%EthiopicNumeralsToBrailleUnicode %BrailleUnicodeToEthiopicNumerals
-		%EthiopicPunctuationToBrailleUnicode %BrailleUnicodeToEthiopicPunctuation
-		@EthiopicForms
+	%EthiopicToBrailleUnicode %BrailleUnicodeToEthiopic
+	%EthiopicNumeralsToBrailleUnicode %BrailleUnicodeToEthiopicNumerals
+	%EthiopicPunctuationToBrailleUnicode %BrailleUnicodeToEthiopicPunctuation
+	@EthiopicForms
 );
 
 %EthiopicToBrailleUnicode =(
@@ -172,14 +172,14 @@ foreach ( keys %EthiopicPunctuationToBrailleUnicode ) {
 }
 
 
-require Convert::Ethiopic::Lite::Number;
+require Convert::Number::Ethiopic;
 
-$n = new Convert::Ethiopic::Lite::Number;
+$n = new Convert::Number::Ethiopic;
 	
 }
 
 
-sub brailleUnicodeToEthiopic
+sub	brailleUnicodeToEthiopic
 {
 
 	return unless ( $_[0] );
@@ -240,7 +240,7 @@ sub brailleUnicodeToEthiopic
 }
 
 
-sub ethiopicToBrailleUnicode
+sub	ethiopicToBrailleUnicode
 {
 
 	return unless ( $_[0] );
@@ -308,7 +308,7 @@ sub	ethiopicToBrailleDots
 }
 
 
-sub brailleAsciiToEthiopic
+sub	brailleAsciiToEthiopic
 {
 	brailleUnicodeToEthiopic ( brailleAsciiToUnicode ( @_ ) );
 }
@@ -320,41 +320,69 @@ sub	brailleDotsToEthiopic
 }
 
 
+#########################################################
+# Do not change this, Do not put anything below this.
+# File must return "true" value at termination
 1;
+##########################################################
+
 __END__
+
 
 
 =head1 NAME
 
- Convert::Braille::Ethiopic - Package to convert between Braille encodings.
+ Convert::Braille::Ethiopic - Convert Between Braille Encodings.
 
 =head1 SYNOPSIS
 
- use Convert::Braille;
+ use Convert::Braille::Ethiopic;
 
- print brailleAsciiToEthiopic ( "S5lAM" ), "\n";
+ print brailleAsciiToEthiopic ( "S5LAM" ), "\n";
  print brailleDotsToEthiopic  ( "234261231134" ), "\n";
 
 
 =head1 REQUIRES
 
-perl5.6.0 (or later), Exporter
+perl5.6.0 or later, L<Convert::Number::Ethiopic>
 
 =head1 EXPORTS
 
- ethiopicToBrailleUnicode
- ethiopicToBrailleAscii
- ethiopicToBrailleDots
- brailleAsciiToEthiopic
- brailleDotsToEthiopic
- brailleUnicodeToEthiopic
+=over 4
+
+=item ethiopicToBrailleUnicode
+
+=item ethiopicToBrailleAscii
+
+=item ethiopicToBrailleDots
+
+=item brailleAsciiToEthiopic
+
+=item brailleDotsToEthiopic
+
+=item brailleUnicodeToEthiopic
+
+=back
+
+=head1 COPYRIGHT
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
 
 =head1 BUGS
 
- None known yet.
+None presently known.
 
 =head1 AUTHOR
 
- Daniel Yacob,  Yacob@EthiopiaOnline.Net
+Daniel Yacob,  L<dyacob@cpan.org|mailto:dyacob@cpan.org>
+
+=head1 SEE ALSO
+
+L<Convert::Braille>    L<Convert::Braille::English>
+
+Included with this package:
+
+  examples/demo.pl    examples/makeethiopic.pl
 
 =cut
