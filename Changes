@@ -1,2 +1,9 @@
+0.02  Sun Aug  4 20:49:02 EDT 2002
+	- dot 7 and 8 stripping added for Braille Unicode => Braille ASCII
+	- $new clobber fixed
+	- 'exist' had to hash check so it won't break on 0 value in map.
+	- Convert::Braille::Ethiopic and Convert::Braille::English added
+	  but don't actually use them yet :-)
+
 0.01  Thu Aug  1 16:42:04 EDT 2002
 	- Initial release.

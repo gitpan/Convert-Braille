@@ -10,7 +10,7 @@ use base qw(Exporter);
 use strict;
 use vars qw( @EXPORT @EXPORT_OK %BrailleAsciiToUnicode %BrailleUnicodeToAscii $VERSION );
 
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 @EXPORT = qw(
 		brailleDotsToUnicode
@@ -29,6 +29,9 @@ $VERSION = 0.01;
 
 		brailleAsciiToDots
 		brailleDotsToAscii
+
+		%BrailleAsciiToUnicode
+		%UnicodeToBrailleAscii
 );
 
 %BrailleAsciiToUnicode =(
@@ -63,7 +66,7 @@ $VERSION = 0.01;
 	2	=> chr(0x2806),
 	3	=> chr(0x2812),
 	4	=> chr(0x2832),
-	5	=> chr(0x2825),
+	5	=> chr(0x2822),
 	6	=> chr(0x2816),
 	7	=> chr(0x2836),
 	8	=> chr(0x2826),
@@ -112,7 +115,7 @@ sub _convert
 
 	my ( $token, $hash ) = @_;
 
-	( $hash->{$token} ) ? $hash->{$token} : $token ;
+	( exists($hash->{$token}) ) ? $hash->{$token} : $token ;
 }
 
 
@@ -133,6 +136,14 @@ sub brailleUnicodeToAscii
 	return unless ( $_[0] );
 
 	my $unicode = $_[0];
+
+	#
+	#  first strip off dots 7 and 8:
+	#
+	if ( $unicode =~ /⡀-⣿/ ) {
+		$unicode =~ tr/⢀-⣿/⠀-⡿/;  # fold upper half
+		$unicode =~ tr/⡀-⡿/⠀-⠿/;  # fold upper quarter
+	}
 	$unicode =~ s/(.)/_convert ( $1, \%BrailleUnicodeToAscii )/ge;
 	$unicode;
 }
@@ -151,7 +162,8 @@ sub brailleUnicodeToDots
 	foreach  ( @chars ) {
 		if ( /[⠀-⣿]/ ) {  # assume UTF8
 			my $char = ord ( $_ ) - 0x2800;
-			my $new = "1" if ( $char & 0x1  );
+			my $new;
+			$new  = "1" if ( $char & 0x1  );
 			$new .= "2" if ( $char & 0x2  );
 			$new .= "3" if ( $char & 0x4  );
 			$new .= "4" if ( $char & 0x8  );

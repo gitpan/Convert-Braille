@@ -4,3 +4,5 @@ Makefile.PL
 README
 examples/demo.pl
 lib/Convert/Braille.pm
+lib/Convert/Braille/English.pm
+lib/Convert/Braille/Ethiopic.pm
