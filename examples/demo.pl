@@ -1,5 +1,9 @@
+#!/usr/bin/perl -w
+
 use Convert::Braille;
 use utf8;
+
+# $Convert::Braille::dot_separator ="-";
 
 if ( $] > 5.007 ) {
 	binmode(STDOUT, ":utf8");

@@ -3,14 +3,14 @@ use utf8;
 
 BEGIN
 {
-require 5.6.0;
+require 5.006;
 
 use base qw(Exporter);
 
 use strict;
-use vars qw( @EXPORT @EXPORT_OK %BrailleAsciiToUnicode %BrailleUnicodeToAscii $VERSION );
+use vars qw( @EXPORT @EXPORT_OK $VERSION %BrailleAsciiToUnicode %BrailleUnicodeToAscii $dot_separator );
 
-$VERSION = 0.03;
+$VERSION = 0.04;
 
 @EXPORT = qw(
 		brailleDotsToUnicode
@@ -79,7 +79,7 @@ $VERSION = 0.03;
 	'"'	=> '⠐',
 	'^'	=> '⠘',
 	'>'	=> '⠜',
-	'\''=> '⠠',
+	'\''	=> '⠠',
 	'*'	=> '⠡',
 	'<'	=> '⠣',
 	'-'	=> '⠤',
@@ -92,7 +92,7 @@ $VERSION = 0.03;
 	'&'	=> '⠯',
 	';'	=> '⠰',
 	':'	=> '⠱',
-	'\\'=> '⠳',
+	'\\'	=> '⠳',
 	'('	=> '⠷',
 	'_'	=> '⠸',
 	'?'	=> '⠹',
@@ -107,11 +107,13 @@ foreach ( keys %BrailleAsciiToUnicode ) {
 	$BrailleUnicodeToAscii{$BrailleAsciiToUnicode{$_}} = $_;
 }
 
+$dot_separator = "";
+
 }
 
 sub _convert
 {
-	return unless ( $_[0] );
+	return unless ( defined($_[0]) );
 
 	my ( $token, $hash ) = @_;
 
@@ -122,7 +124,7 @@ sub _convert
 sub brailleAsciiToUnicode
 {
 
-	return unless ( $_[0] );
+	return unless ( defined($_[0]) );
 
 	my $ascii = $_[0];
 	$ascii =~ s/(.)/_convert ( $1, \%BrailleAsciiToUnicode )/ge;
@@ -133,7 +135,7 @@ sub brailleAsciiToUnicode
 sub brailleUnicodeToAscii
 {
 
-	return unless ( $_[0] );
+	return unless ( defined($_[0]) );
 
 	my $unicode = $_[0];
 
@@ -157,24 +159,26 @@ sub brailleUnicodeToDots
 
 	my @chars  = split ( //, $string );
 
-	my $trans;
+	my ($trans, $dots);
 
 	foreach  ( @chars ) {
 		if ( /[⠀-⣿]/ ) {  # assume UTF8
 			my $char = ord ( $_ ) - 0x2800;
-			my $new;
-			$new  = "1" if ( $char & 0x1  );
-			$new .= "2" if ( $char & 0x2  );
-			$new .= "3" if ( $char & 0x4  );
-			$new .= "4" if ( $char & 0x8  );
-			$new .= "5" if ( $char & 0x10 );
-			$new .= "6" if ( $char & 0x20 );
-			$new .= "7" if ( $char & 0x40 );
-			$new .= "8" if ( $char & 0x80 );
-			$trans .= $new;
+			$trans .= $dot_separator if ( $dots );
+			$dots  = undef;
+			$dots  = "1" if ( $char & 0x1  );
+			$dots .= "2" if ( $char & 0x2  );
+			$dots .= "3" if ( $char & 0x4  );
+			$dots .= "4" if ( $char & 0x8  );
+			$dots .= "5" if ( $char & 0x10 );
+			$dots .= "6" if ( $char & 0x20 );
+			$dots .= "7" if ( $char & 0x40 );
+			$dots .= "8" if ( $char & 0x80 );
+			$trans .= $dots;
 		}
 		else {
 			$trans .= $_;
+			$dots = undef;
 		}
 	}
 

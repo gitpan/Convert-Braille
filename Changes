@@ -1,3 +1,9 @@
+0.04 Thu Aug  8 13:43:41 EDT 2002
+	- added $dot_separator
+	- added t/braille.t
+	- added examples/makeethiopic.pl
+	- real Ethiopic number conversion replaces dummy conversion.
+
 0.03  Mon Aug  5 15:45:35 EDT 2002
 	- hash keys are native utf-8
 	- Ethiopic forward and reverse conversions tested.
