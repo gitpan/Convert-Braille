@@ -30,11 +30,6 @@ What This Package Can NOT Do
   but thats about it.  Only character codes are converted,
   no semantic checking is performed.
 
-  Conversion from 8-dot Unicode Braille to Braille-ASCII
-  is not handled presently.  This will be fixed later by
-  ignoring dots 7 and 8 -or some other solution someone
-  suggests.
-
 What Next?
 
   Fix the 8 dot problem and I intend to work on conversion

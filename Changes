@@ -1,3 +1,7 @@
+0.03  Mon Aug  5 15:45:35 EDT 2002
+	- hash keys are native utf-8
+	- Ethiopic forward and reverse conversions tested.
+
 0.02  Sun Aug  4 20:49:02 EDT 2002
 	- dot 7 and 8 stripping added for Braille Unicode => Braille ASCII
 	- $new clobber fixed

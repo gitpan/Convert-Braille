@@ -160,28 +160,26 @@ sub brailleUnicodeToEnglish
 
 	my $base;
 	foreach  ( @chars ) {
-
-		if ( exists($BrailleUnicodeToEnglish{$_}) ) {
-			$base = $UnicodeBrailleToEnglish{$_};
+		if ( exists($SpecialContext{$_}) ) {
+			#
+			# analyze context
+			#
 		}
-		elsif ( exists($BrailleUnicodeToEnglishForms{$_}) ) {
-			$trans = $base.$BrailleUnicodeToEnglishForms{$_});
-			$base = undef;
+		elsif ( exists($BrailleUnicodeToEnglish{$_}) ) {
+			#
+			# simple map
+			#
+			$base = $BrailleUnicodeToEnglish{$_};
 		}
 		else {
-			if ( $base ) {
-				$trans .= $base;
-				$base = undef;
-			}
-			if ( exists($BrailleUnicodeToEnglishNumbers{$_}) ) {
-				$trans = $base.$BrailleUnicodeToEnglishNumbers{$_});
-			}
-			elsif ( exists($BrailleUnicodeToEnglishPunctuation{$_}) ) {
-				$trans = $base.$BrailleUnicodeToEnglishPunctuation{$_});
-			}
+			#
+			# error
+			#
 		}
 	}
 
+	$trans .= $base if ( $base );
+	$trans;
 }
 
 
@@ -195,25 +193,13 @@ sub englishToBrailleUnicode
 	my $trans;
 
 	foreach  ( @chars ) {
-
-
-		if ( exists($EnglishToBrailleUnicode{$_}) ) {
+		if ( 1 ) {
+			# 
+			# special cases
+			# 
+		}
+		elsif ( exists($EnglishToBrailleUnicode{$_}) ) {
 			$trans .= $EnglishToBrailleUnicode{$_};
-		}
-		elsif ( /[he-pWa]/ ) {  # fix w/ yudit
-
-			my $uni  = $_;
-			my $addr = ord($uni);
-
-			my $form  = ord($uni)%8;
-			my $sadis = chr( ord($uni)-$form+6 );
-			$trans = $EnglishToBrailleUnicode{$sadis}.$Forms[$form];
-		}
-		elsif ( exists($EnglishNumbersToBrailleUnicode{$_}) ) {
-			$trans = $EnglishNumbersToBrailleUnicode{$_});
-		}
-		elsif ( exists($EnglishPunctuationBrailleUnicode{$_}) ) {
-			$trans = $EnglishPunctuationBrailleUnicode{$_});
 		}
 	}
 	
